@@ -1,0 +1,14 @@
+{
+  "name": "Divakar weds Soundharya",
+  "short_name": "D & S",
+  "description": "Wedding invitation. 31 Oct and 1 Nov 2026, The Royal Palms, Chennai.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060F26",
+  "theme_color": "#060F26",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
