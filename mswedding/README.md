@@ -3,18 +3,18 @@
 A static site: no build step, no server code, no database. Upload and it works.
 
 ```
-index.html               the whole site. Styling, scripts, fonts, bells, ornaments and the three photos are BUILT IN
-audio/song.mp3           the background music (128 kbps, 3 min 39 s, starts instantly, loops). The only separate file the page needs
-standalone.html          the same site with the music packed in too, so it needs nothing else
+index.html               the whole site. Styling, scripts, fonts, ornaments, your three photos AND the music are all BUILT IN
+audio/song.mp3           the same music as a normal file (used first when present, because it starts a little faster)
+standalone.html          an identical copy of the site, for hosts that want a single file
 images/                  your three couple photos, bells, banana tree, leaf, gopuram, monogram, favicon and the link-preview picture
 fonts/                   Pinyon Script and Playfair Display (SIL Open Font License, licences included)
 ```
 
-## The one rule
+## Nothing can go missing
 
-Put `audio/song.mp3` next to `index.html` (inside an `audio` folder). If the music file is missing or in the wrong
-place the site still looks perfect, including the photos, but plays no music. The page also tries `song.mp3` in the
-same folder, so a flat upload works too. Or upload `standalone.html` alone, which has the music inside.
+Everything the page needs is inside `index.html`, including the song. So even if only that one file reaches your host,
+the photos, the fonts and the music all still work. If `audio/song.mp3` is there it is used; if not, the built-in copy
+plays. `index.html` is about 6 MB because of this, which is normal for a music-and-photo invitation.
 
 If you unzip and double-click, open the unzipped folder, not the zip itself.
 
@@ -83,8 +83,8 @@ A plain website has no database, so decide how you want to receive wishes:
 - The story: the "Our story" section holds your text; the threads graphic beside it follows the scroll.
 - The credit box at the very bottom: search for `class="credit"`. Delete that whole `<a>` block to remove it.
 - Colours: the `:root` block near the top of the `<style>`.
-- Song: replace `audio/song.mp3` with another MP3 of the same name (keep it under about 4 MB).
-  `standalone.html` has the old song packed inside it, so use `index.html` plus the folder if you change the song.
+- Song: to change it, ask for a rebuild, because the song is packed inside `index.html` and `standalone.html`.
+  (Replacing `audio/song.mp3` alone only works if you also delete the built-in copy, the `songData` block at the end of `index.html`.)
 
 ## Notes
 
