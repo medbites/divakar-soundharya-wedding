@@ -331,6 +331,12 @@ input:focus,textarea:focus{outline:none;border-color:var(--brand-text)}
   html{scroll-behavior:auto}
 }
 </style>
+
+<!-- Vercel Web Analytics -->
+<script type="module">
+  import { inject } from '/assets/analytics/analytics.js';
+  inject({ mode: 'auto' });
+</script>
 </head>
 <body>
 

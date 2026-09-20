@@ -1,0 +1,13 @@
+{
+  "name": "divakar-soundharya-wedding",
+  "version": "1.0.0",
+  "description": "Wedding websites and digital invites",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static HTML site - no build required'",
+    "test": "echo 'No tests configured'"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.1.1"
+  }
+}
