@@ -27,14 +27,18 @@ module.exports = async (req, res) => {
 
   const token = process.env.VERCEL_ANALYTICS_TOKEN;
   const password = process.env.REPORT_PASSWORD;
-  if (!token || !password) {
-    return fail(res, 500, "not_configured", "Set REPORT_PASSWORD and VERCEL_ANALYTICS_TOKEN in the Vercel project settings, then redeploy.");
+  if (!password) {
+    return fail(res, 500, "not_configured", "Set REPORT_PASSWORD in the Vercel project settings, then redeploy.");
   }
 
   const auth = req.headers.authorization || "";
   const given = auth.startsWith("Bearer ") ? auth.slice(7) : "";
   if (!given || !samePassword(given, password)) {
     return fail(res, 401, "unauthorized", "Wrong password.");
+  }
+
+  if (!token) {
+    return fail(res, 503, "token_missing", "Add VERCEL_ANALYTICS_TOKEN in the Vercel project settings, then redeploy.");
   }
 
   const q = req.query || {};

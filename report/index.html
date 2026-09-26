@@ -253,6 +253,7 @@ tr.sel{background:var(--accent-soft)}
   function explain(err) {
     switch (err.code) {
       case "not_configured": return "The report isn't set up yet: " + err.message;
+      case "token_missing": return "Password accepted. The report can't read Vercel yet because the access token hasn't been added. " + err.message;
       case "forbidden":
       case "invalid_token": return "Vercel rejected the server's access token. Create a new token and update VERCEL_ANALYTICS_TOKEN in the Vercel project settings.";
       case "network": return "Couldn't reach the report server. Check your connection; the page will try again in a minute.";
@@ -332,12 +333,13 @@ tr.sel{background:var(--accent-soft)}
         renderBars("osBars", rows(p), function (d) { return d.osName || "Unknown"; });
       }, myGen)
     ]).then(function (results) {
+      // Any answer other than 401 means the password was accepted, even if data failed.
       if (myGen !== gen || !password) return;
+      $("dash").hidden = false;
+      $("login").hidden = true;
+      $("logout").hidden = false;
       if (results.some(Boolean)) {
         setStatus("live", "Live from Vercel · updated " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
-        $("dash").hidden = false;
-        $("login").hidden = true;
-        $("logout").hidden = false;
       }
     });
   }
