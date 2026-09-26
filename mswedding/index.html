@@ -329,6 +329,41 @@
   .wish.empty { background: transparent; border: 1.5px dashed var(--hair); box-shadow: none; transform: none; align-items: center; justify-content: center; text-align: center; color: var(--ink-soft); font-style: italic; }
   .wish.bloom { animation: bloom 1.1s cubic-bezier(.2, .9, .3, 1.2) both; }
   .wish.bloom .pet { animation: spin-in 1.1s ease both; }
+
+  /* wish garden: anonymous wishes drift in and out; the full list opens in a sheet */
+  .garden-wrap { margin-top: 2.6rem; }
+  .garden-eyebrow { font-style: italic; color: var(--ink-soft); }
+  .garden-title { font-family: var(--script); font-weight: 400; font-size: clamp(2rem, 9cqw, 2.8rem); line-height: 1.15; color: var(--bronze); }
+  .garden { position: relative; height: 17rem; margin-top: 1rem; overflow: hidden; cursor: pointer;
+    background: radial-gradient(ellipse at 50% 60%, rgba(200, 155, 60, .12), transparent 70%); }
+  .garden-empty { position: absolute; inset: 0; display: grid; place-items: center; padding: 1rem; font-style: italic; color: var(--ink-soft); }
+  .gw { position: absolute; max-width: 72%; padding: .7rem .95rem .75rem; background: #FBF4E6; border: 1px solid var(--hair);
+    box-shadow: 0 6px 18px rgba(78, 55, 30, .12); font-style: italic; font-size: 1rem; line-height: 1.4; color: #3E2A20; text-align: left;
+    overflow-wrap: anywhere; opacity: 0; animation: gw-life 7.5s ease-in-out forwards; }
+  .gw::before { content: "\201C"; position: absolute; top: -.55rem; left: .5rem; font-size: 1.9rem; line-height: 1; color: var(--bronze); }
+  .gw.alt { background: #F2E4CC; }
+  .gw.mine { border-color: var(--bronze); box-shadow: 0 0 0 3px rgba(169, 109, 60, .18), 0 6px 18px rgba(78, 55, 30, .12); }
+  @keyframes gw-life {
+    0% { opacity: 0; transform: translateY(14px) rotate(var(--r)) scale(.94); }
+    14% { opacity: 1; transform: translateY(0) rotate(var(--r)) scale(1); }
+    82% { opacity: 1; transform: translateY(-16px) rotate(var(--r)) scale(1); }
+    100% { opacity: 0; transform: translateY(-28px) rotate(var(--r)) scale(.98); }
+  }
+  .garden-count { margin-top: .8rem; font-size: .92rem; font-style: italic; color: var(--ink-soft); min-height: 1.3em; }
+  .garden-btn { margin-top: .6rem; }
+  .wish-sheet { position: fixed; inset: 0; margin: auto; text-align: left; width: min(440px, calc(100vw - 2rem)); max-height: min(78vh, 640px); padding: 0; border: 1px solid var(--hair);
+    background: var(--paper); color: var(--ink); font-family: var(--serif); box-shadow: 0 20px 60px rgba(40, 25, 15, .35); }
+  .wish-sheet::backdrop { background: rgba(40, 25, 15, .45); }
+  .wish-sheet[open] { display: flex; flex-direction: column; animation: sheet-in .35s ease both; }
+  @keyframes sheet-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  .ws-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.2rem .8rem; border-bottom: 1px solid var(--hair); }
+  .ws-head h3 { font-family: var(--script); font-weight: 400; font-size: 2rem; line-height: 1; color: var(--bronze); }
+  .ws-head span { font-size: .85rem; font-style: italic; color: var(--ink-soft); }
+  .ws-close { margin-left: auto; width: 36px; height: 36px; border: 1px solid var(--hair); border-radius: 50%; background: none; color: var(--ink); font: inherit; font-size: 1.3rem; line-height: 1; cursor: pointer; flex: none; }
+  .ws-list { list-style: none; margin: 0; padding: .6rem 1.2rem 1.4rem; overflow-y: auto; overscroll-behavior: contain; }
+  .ws-list li { position: relative; padding: .95rem 0 .95rem 1.6rem; border-bottom: 1px solid rgba(78, 67, 59, .16); font-style: italic; font-size: 1.05rem; line-height: 1.5; color: #3E2A20; overflow-wrap: anywhere; }
+  .ws-list li:last-child { border-bottom: 0; }
+  .ws-list li::before { content: ""; position: absolute; left: .1rem; top: 1.45rem; width: .55rem; height: .55rem; border-radius: 50% 0; background: var(--bronze); opacity: .7; transform: rotate(45deg); }
   @keyframes bloom { 0% { opacity: 0; transform: rotate(var(--rot)) scale(.55); filter: blur(6px); } 100% { opacity: 1; transform: rotate(var(--rot)) scale(1); filter: blur(0); } }
   @keyframes spin-in { from { transform: rotate(-140deg) scale(.2); } to { transform: none; } }
   .view-all { margin: 1.8rem auto 0; display: inline-flex; align-items: center; gap: .5rem; padding: 0 .1rem .35rem; background: none; border: 0; border-bottom: 1px solid var(--ink); color: var(--ink); font: inherit; font-size: 1.05rem; cursor: pointer; }
@@ -508,6 +543,8 @@
     .km-hint { display: none; }
     .km-child-pulse { animation: none; display: none; }
     html { scroll-behavior: auto; }
+    .gw { animation: none !important; opacity: 1 !important; transform: rotate(var(--r)) !important; }
+    .wish-sheet[open] { animation: none; }
     .curtain, .married, .scratch canvas, .acc-panel, .cal-pop, .dock, .memo canvas, .memo-msg, .brush-wrap canvas, .wish, .wish .pet, .story-card .sp, .story-tag em, .hero.written .n, .hero.written .amp, .hero.written .logo, .hero.written .cue, .hero.written .tap-hint, .km-child-pulse, .km-child.tapped, .km-logo { transition-duration: .01s !important; transition-delay: 0s !important; }
     .curtain-cta .hint svg, .cue svg, .brush-prompt svg, .dock button.playing .eq rect, .credit, .credit-cta svg { animation: none !important; }
   }
@@ -802,6 +839,23 @@ setTimeout(function () {
       </button>
       <p class="wish-note" id="wishNote"></p>
     </form>
+
+    <div class="garden-wrap">
+      <p class="garden-eyebrow">From everyone who stopped by</p>
+      <h3 class="garden-title">A garden of wishes</h3>
+      <div class="garden" id="garden" role="button" tabindex="0" aria-label="Open all the wishes"></div>
+      <p class="garden-count" id="gardenCount" aria-live="polite"></p>
+      <button class="reveal-btn garden-btn" id="gardenBtn" type="button" hidden>Read all the wishes</button>
+    </div>
+
+    <dialog class="wish-sheet" id="wishSheet" aria-labelledby="wishSheetTitle">
+      <div class="ws-head">
+        <h3 id="wishSheetTitle">All the wishes</h3>
+        <span id="wishSheetCount"></span>
+        <button class="ws-close" id="wishSheetClose" type="button" aria-label="Close">&times;</button>
+      </div>
+      <ul class="ws-list" id="wishList"></ul>
+    </dialog>
 
   </section>
 
@@ -1571,15 +1625,15 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 
   /* ---------- wishes ---------- */
   /* endpoint: https address of the Google Apps Script that saves each wish to the sheet, so Mahati & Sankar
-     receive it. Wishes are never shown on the page. (curated is no longer used.) */
+     receive it. The same address answers GET with every wish; the garden below shows their words, never names.
+     (curated is no longer used.) */
   var WISHES_CFG = { endpoint: "https://script.google.com/macros/s/AKfycbzkUJ19H3dOJWGcyu-sxDCaIqLxK6MUUcQZvpSBs-sup8L7kJcAsIsNlnfYXenJwZzk/exec", curated: [] };
 
   var wishForm = $("wishForm"), wishText = $("wishText"), wishName = $("wishName");
   var wishMsg = $("wishMsg");
 
-  /* wishes are sent to Mahati & Sankar only; none are shown on the page */
   $("wishNote").textContent = /^https:\/\//.test(WISHES_CFG.endpoint)
-    ? "Your wish goes straight to Mahati & Sankar."
+    ? "Your wish goes to Mahati & Sankar. Its words join the garden below, without your name."
     : "Wishes are not connected yet.";
 
   wishText.addEventListener("input", function () { $("wishLeft").textContent = 280 - wishText.value.length; });
@@ -1601,11 +1655,128 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
         }).catch(function () {});
       } catch (x) {}
     }
+    gardenAdd(text);
     wishText.value = ""; $("wishLeft").textContent = "280";
     wishMsg.textContent = sent ? "Sent to Mahati & Sankar. Thank you!" : "Thank you for your wish!";
     ring(.35);
     burst(26, 2400, petalColors, true);
   });
+
+
+  /* ---------- wish garden: words only, drifting in and out; the button opens the full list ---------- */
+  var garden = $("garden"), gardenCount = $("gardenCount"), gardenBtn = $("gardenBtn");
+  var wishSheet = $("wishSheet"), wishList = $("wishList");
+  var gWishes = [], gQueue = [], gTimer = 0, gSeen = false, gLoaded = false, gAlt = false;
+
+  function gShuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function gUpdateCount() {
+    var n = gWishes.length;
+    gardenCount.textContent = n ? n + (n === 1 ? " wish" : " wishes") + " and counting" : "";
+    gardenBtn.hidden = !n;
+  }
+  function gNext() {
+    if (!gQueue.length) gQueue = gShuffle(gWishes.slice());
+    return gQueue.pop();
+  }
+  /* places a note where it overlaps the fewest notes already showing */
+  function gSpawn(text, mine) {
+    if (!text) return;
+    var el = document.createElement("div");
+    el.className = "gw" + ((gAlt = !gAlt) ? " alt" : "") + (mine ? " mine" : "");
+    el.textContent = text.length > 130 ? text.slice(0, 127).replace(/\s+\S*$/, "") + "…" : text;
+    el.style.setProperty("--r", (Math.random() * 5 - 2.5).toFixed(1) + "deg");
+    el.style.visibility = "hidden";
+    garden.appendChild(el);
+    var W = garden.clientWidth, H = garden.clientHeight, w = el.offsetWidth, h = el.offsetHeight;
+    var others = Array.prototype.filter.call(garden.children, function (c) { return c !== el && c.classList.contains("gw"); });
+    var best = null, bestHit = Infinity;
+    for (var i = 0; i < 14; i++) {
+      var x = Math.random() * Math.max(0, W - w), y = 14 + Math.random() * Math.max(0, H - h - 34), hit = 0;
+      others.forEach(function (o) {
+        var ox = Math.max(0, Math.min(x + w, o.offsetLeft + o.offsetWidth) - Math.max(x, o.offsetLeft));
+        var oy = Math.max(0, Math.min(y + h, o.offsetTop + o.offsetHeight) - Math.max(y, o.offsetTop));
+        hit += ox * oy;
+      });
+      if (hit < bestHit) { bestHit = hit; best = [x, y]; }
+      if (!hit) break;
+    }
+    el.style.left = best[0] + "px"; el.style.top = best[1] + "px";
+    el.style.visibility = "";
+    if (reduce) {
+      while (garden.querySelectorAll(".gw").length > 3) garden.querySelector(".gw").remove();
+    } else {
+      el.addEventListener("animationend", function () { el.remove(); });
+    }
+  }
+  function gTick() {
+    if (document.hidden || !gSeen || !gWishes.length) return;
+    if (garden.querySelectorAll(".gw").length < 3) gSpawn(gNext());
+  }
+  function gStart() {
+    if (gTimer || !gWishes.length) return;
+    gTick();
+    gTimer = setInterval(gTick, reduce ? 6000 : 2300);
+  }
+  function gStop() { clearInterval(gTimer); gTimer = 0; }
+
+  function gLoad() {
+    if (gLoaded || !/^https:\/\//.test(WISHES_CFG.endpoint)) return;
+    gLoaded = true;
+    fetch(WISHES_CFG.endpoint).then(function (r) { return r.json(); }).then(function (d) {
+      var list = (d && d.wishes) || [];
+      list.forEach(function (w) {
+        var t = w && typeof w.text === "string" ? w.text.trim() : "";
+        if (t) gWishes.push(t.slice(0, 280));
+      });
+      gUpdateCount();
+      if (!gWishes.length) {
+        var e = document.createElement("p"); e.className = "garden-empty"; e.textContent = "The first wish will bloom here.";
+        garden.appendChild(e);
+      }
+      if (gSeen) gStart();
+    }).catch(function () {
+      gardenCount.textContent = "The wishes couldn't load just now.";
+    });
+  }
+  /* a guest's own wish blooms straight away */
+  function gardenAdd(text) {
+    text = String(text || "").trim().slice(0, 280);
+    if (!text) return;
+    gWishes.push(text);
+    var empty = garden.querySelector(".garden-empty"); if (empty) empty.remove();
+    gUpdateCount();
+    gSpawn(text, true);
+    gStart();
+  }
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) {
+      en.forEach(function (x) {
+        if (x.isIntersecting) gLoad();
+        if (x.target === garden) { gSeen = x.isIntersecting; if (gSeen) gStart(); else gStop(); }
+      });
+    }, { rootMargin: "400px 0px" }).observe(garden);
+  } else { gSeen = true; gLoad(); }
+
+  function openWishes() {
+    if (!gWishes.length) return;
+    wishList.textContent = "";
+    gShuffle(gWishes.slice()).forEach(function (t) {
+      var li = document.createElement("li"); li.textContent = t; wishList.appendChild(li);
+    });
+    $("wishSheetCount").textContent = gWishes.length + (gWishes.length === 1 ? " wish" : " wishes");
+    if (wishSheet.showModal) wishSheet.showModal(); else wishSheet.setAttribute("open", "");
+    wishList.scrollTop = 0;
+  }
+  function closeWishes() { if (wishSheet.close) wishSheet.close(); else wishSheet.removeAttribute("open"); }
+  gardenBtn.addEventListener("click", openWishes);
+  garden.addEventListener("click", openWishes);
+  garden.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openWishes(); } });
+  $("wishSheetClose").addEventListener("click", closeWishes);
+  wishSheet.addEventListener("click", function (e) { if (e.target === wishSheet) closeWishes(); });
 
 
   /* ---------- our story: lines fade in and the distance is drawn as you scroll ---------- */
