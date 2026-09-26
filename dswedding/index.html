@@ -1096,6 +1096,43 @@ button.map-link{line-height:inherit}
   border-color:var(--gold); background:rgba(6,15,38,.8); outline:none;
 }
 .field textarea{resize:vertical;min-height:5rem;line-height:1.6}
+.field .wish-label{display:flex;flex-direction:column;gap:.2rem;text-transform:none;letter-spacing:0;margin-top:.4rem}
+.field .wish-label strong{
+  position:relative; isolation:isolate; align-self:flex-start;
+  font-family:var(--sans); font-weight:600;
+  font-size:1.1rem; line-height:1.3; color:var(--gold-bright);
+  padding:.1rem .45rem .15rem; margin-left:-.45rem; border-radius:3px;
+}
+/* highlight: a soft gold marker sweeps in behind the words, then a shimmer runs through them */
+.field .wish-label strong::before{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:3px;
+  background:linear-gradient(90deg, rgba(212,175,86,.26), rgba(212,175,86,.12));
+  box-shadow:0 0 18px rgba(235,208,138,.18);
+  transform:scaleX(0); transform-origin:left;
+}
+.field .wish-label.lit strong::before{animation:wishMark .9s cubic-bezier(.2,.85,.3,1) .15s forwards}
+.field .wish-label.lit strong .shine{
+  background:linear-gradient(100deg, var(--gold-bright) 0 38%, #FFF6DA 50%, var(--gold-bright) 62% 100%);
+  background-size:260% 100%; background-position:100% 0;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:wishShine 3.6s ease-in-out 1s infinite;
+}
+.field .wish-label strong .spark{
+  display:inline-block; margin-left:.35rem; color:var(--gold);
+  font-size:.85em; transform-origin:50% 55%;
+}
+.field .wish-label.lit strong .spark{animation:wishTwinkle 2.4s ease-in-out 1s infinite}
+@keyframes wishMark{to{transform:scaleX(1)}}
+@keyframes wishShine{0%{background-position:100% 0}55%,100%{background-position:0 0}}
+@keyframes wishTwinkle{0%,100%{transform:scale(1) rotate(0);opacity:.75}50%{transform:scale(1.35) rotate(20deg);opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .field .wish-label strong::before{transform:none;animation:none}
+  .field .wish-label.lit strong .shine,.field .wish-label.lit strong .spark{animation:none}
+}
+.field .wish-label > span{
+  font-family:var(--sans); font-weight:400;
+  font-size:var(--fs-sm); line-height:1.4; color:var(--sky-3);
+}
 .submit{
   grid-column:1 / -1; justify-self:center;
   margin-top:var(--sp-1);
@@ -1754,8 +1791,11 @@ footer .strip{
               <input id="rsvp-city" name="city" type="text" placeholder="Chennai">
             </div>
             <div class="field full">
-              <label for="rsvp-note">Special request: a blessing, a warning, a song</label>
-              <textarea id="rsvp-note" name="note" rows="3"></textarea>
+              <label for="rsvp-note" class="wish-label">
+                <strong><span class="shine">Your wishes for Divakar &amp; Soundharya</span><span class="spark" aria-hidden="true">✦</span></strong>
+                <span>A blessing, a message, or a special request. Optional.</span>
+              </label>
+              <textarea id="rsvp-note" name="note" rows="3" placeholder="Write your wishes here…"></textarea>
             </div>
             <div class="hp-trap" aria-hidden="true">
               <label for="rsvp-hp">Leave this field empty</label>
@@ -2415,6 +2455,13 @@ barcode(document.getElementById("bcFoot"), "SHUBHAVIVAHA011126", "#D4AF56");
    ============================================================ */
 (function checkIn(){
   const form = document.getElementById("rsvpForm");
+  const wishLabel = document.querySelector(".wish-label");
+  if(wishLabel){
+    if(!("IntersectionObserver" in window)) wishLabel.classList.add("lit");
+    else new IntersectionObserver((en, obs) => {
+      if(en[0].isIntersecting){ wishLabel.classList.add("lit"); obs.disconnect(); }
+    }, { threshold: 0.6 }).observe(wishLabel);
+  }
   const wrap = document.getElementById("issuedWrap");
   const note = document.getElementById("formNote");
   if(!form) return;
@@ -2506,7 +2553,7 @@ barcode(document.getElementById("bcFoot"), "SHUBHAVIVAHA011126", "#D4AF56");
         `Segments: ${SEGMENTS[data.attending] || data.attending}\n` +
         `Seats: ${seats}\n` +
         `Departing from: ${data.city || "Not given"}\n` +
-        `Request: ${data.note || "None"}\n` +
+        `Wishes / request: ${data.note || "None"}\n` +
         `Ref: ${ref}`;
       window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
     }
