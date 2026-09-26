@@ -2303,5 +2303,57 @@ barcode(document.getElementById("bcFoot"), "SHUBHAVIVAHA011126", "#D4AF56");
 })();
 </script>
 
+<!-- Vercel Web Analytics. Pageviews work on every plan; the "Time on page" and
+     "Section time" events below are custom events, which Vercel only records on Pro. -->
+<script>
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+(function () {
+  var page = location.pathname.replace(/\/index\.html$/, "/").replace(/\/$/, "") || "/";
+  var bucket = function (s) {
+    return s < 10 ? "0-10s" : s < 30 ? "10-30s" : s < 60 ? "30-60s" : s < 180 ? "1-3m" : s < 600 ? "3-10m" : "10m+";
+  };
+  var visibleMs = 0, visibleAt = document.hidden ? 0 : Date.now();
+  var sectionMs = {}, current = null, currentAt = 0;
+
+  function stopSection() {
+    if (current && currentAt) sectionMs[current] = (sectionMs[current] || 0) + Date.now() - currentAt;
+    currentAt = 0;
+  }
+  function startSection(id) {
+    stopSection();
+    current = id;
+    currentAt = document.hidden ? 0 : Date.now();
+  }
+
+  // The section crossing the middle of the screen counts as the one being read.
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) startSection(e.target.id); });
+    }, { rootMargin: "-50% 0px -50% 0px" });
+    document.querySelectorAll("section[id]").forEach(function (s) { io.observe(s); });
+  }
+
+  // Send when the guest leaves or switches away; start counting again if they come back.
+  function flush() {
+    if (visibleAt) visibleMs += Date.now() - visibleAt;
+    visibleAt = 0;
+    stopSection();
+    var total = Math.round(visibleMs / 1000);
+    if (total >= 1) window.va("event", { name: "Time on page", data: { page: page, time: bucket(total) } });
+    Object.keys(sectionMs).forEach(function (id) {
+      var s = Math.round(sectionMs[id] / 1000);
+      if (s >= 2) window.va("event", { name: "Section time", data: { section: page + "#" + id, time: bucket(s) } });
+    });
+    visibleMs = 0;
+    sectionMs = {};
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { flush(); }
+    else { visibleAt = Date.now(); if (current) currentAt = Date.now(); }
+  });
+  window.addEventListener("pagehide", function () { if (!document.hidden) flush(); });
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
