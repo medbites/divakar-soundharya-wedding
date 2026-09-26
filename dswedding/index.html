@@ -13,12 +13,12 @@
      root, in a subfolder, or opened straight off your desktop.
      ============================================================ -->
 <title>Divakar weds Soundharya</title>
-<meta name="description" content="Divakar and Soundharya invite you to their wedding. 31 October and 1 November 2026 at The Royal Palms, Vettuvankeni, ECR, Chennai. Muhurtam at 10:30 AM.">
+<meta name="description" content="Divakar and Soundharya invite you to their wedding. 31 October and 1 November 2026 at The Royal Palms, Vettuvankeni, ECR, Chennai. Muhurtam from 9 AM onwards.">
 <link rel="canonical" href="https://jobosskystudios.online/dswedding/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Divakar weds Soundharya">
-<meta property="og:description" content="31 Oct and 1 Nov 2026 at The Royal Palms, Chennai. Muhurtam at 10:30 AM. Tear the stub, check in, and come.">
+<meta property="og:description" content="31 Oct and 1 Nov 2026 at The Royal Palms, Chennai. Muhurtam from 9 AM onwards. Tear the stub, check in, and come.">
 <meta property="og:image" content="https://jobosskystudios.online/dswedding/share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -26,7 +26,7 @@
 <meta property="og:locale" content="en_IN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Divakar weds Soundharya">
-<meta name="twitter:description" content="31 Oct and 1 Nov 2026 at The Royal Palms, Chennai. Muhurtam at 10:30 AM.">
+<meta name="twitter:description" content="31 Oct and 1 Nov 2026 at The Royal Palms, Chennai. Muhurtam from 9 AM onwards.">
 <meta name="twitter:image" content="https://jobosskystudios.online/dswedding/share.jpg">
 
 <meta name="theme-color" content="#060F26">
@@ -968,8 +968,83 @@ figure figcaption{
   letter-spacing:.16em; text-transform:uppercase;
   transition:background .25s ease, color .25s ease;
 }
+.map-link{cursor:pointer}
 .map-link:hover{background:var(--gold-deep);border-color:var(--gold-deep);color:#fff}
 .map-link svg{width:13px;height:13px}
+
+/* address: tap to copy */
+.addr-copy{
+  appearance:none; background:none; border:0; padding:0; margin:0;
+  font:inherit; color:inherit; text-align:left; cursor:copy;
+  display:flex; flex-direction:column; align-items:flex-start; gap:.3rem;
+  border-radius:3px;
+}
+.addr-copy address{transition:color .25s ease}
+.addr-copy:hover address{color:var(--ink)}
+.addr-copy .copy-hint{
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:.12em;
+  text-transform:uppercase; color:var(--gold-deep);
+  transition:color .25s ease;
+}
+.addr-copy .copy-hint svg{width:12px;height:12px}
+.addr-copy.copied .copy-hint{color:var(--stamp)}
+
+/* flight path: MAA to RYP; the plane flies when the card lands, tap to fly it again */
+.route{
+  appearance:none; background:none; border:0; margin:.35rem 0 0; padding:.2rem 0;
+  font:inherit; color:inherit; cursor:pointer; width:100%;
+  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:.8rem;
+}
+.route .end{display:flex;flex-direction:column;text-align:left;line-height:1.1}
+.route .end.to{text-align:right}
+.route .end b{font-family:var(--display);font-weight:400;font-size:1.35rem;color:var(--ink);letter-spacing:.02em}
+.route .end small{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.route .track{position:relative;height:30px}
+.route .track::before{
+  content:""; position:absolute; left:0; right:0; top:50%; height:0;
+  border-top:2px dashed var(--paper-3);
+}
+.route .trail{
+  position:absolute; left:0; top:50%; height:2px; margin-top:-1px; width:0;
+  background:linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold-deep));
+}
+.route .jet{
+  position:absolute; left:0; top:50%; width:22px; height:22px;
+  margin:-11px 0 0 -11px; color:var(--ink);
+}
+.route .eta{
+  position:absolute; left:50%; bottom:-.35rem; transform:translateX(-50%);
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.14em; color:var(--gold-deep);
+  white-space:nowrap; opacity:0; transition:opacity .4s ease;
+}
+.route.flown .eta{opacity:1}
+.route.flying .trail{animation:trail 1.6s cubic-bezier(.45,.05,.25,1) forwards}
+.route.flying .jet{animation:fly 1.6s cubic-bezier(.45,.05,.25,1) forwards}
+.route.flown .trail{width:100%}
+.route.flown .jet{left:100%}
+@keyframes trail{from{width:0}to{width:100%}}
+@keyframes fly{
+  0%  {left:0;    transform:translateY(0) rotate(-8deg)}
+  50% {           transform:translateY(-5px) rotate(0)}
+  100%{left:100%; transform:translateY(0) rotate(6deg)}
+}
+.route:hover .jet{color:var(--gold-deep)}
+
+/* the action buttons */
+.arr-actions{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.7rem}
+.arr-actions .map-link{margin-top:0}
+.map-link.ghost{background:transparent;color:var(--ink)}
+.map-link.ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+button.map-link{line-height:inherit}
+@media (max-width:520px){
+  .arr-actions{padding-right:clamp(86px,24vw,112px)}   /* keep clear of the stamp */
+  .arr-actions .map-link{padding:.6rem .9rem;letter-spacing:.1em}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .route.flying .trail,.route.flying .jet{animation:none}
+}
 
 /* ============================================================
    CHECK-IN (RSVP)
@@ -1410,8 +1485,8 @@ footer .strip{
       <div class="stub-slot">
         <div class="stub-under">
           <span class="fl">Muhurtam</span>
-          <span class="big">10:30 AM</span>
-          <span class="sub">Sun · 01 Nov 2026</span>
+          <span class="big">9:00 AM</span>
+          <span class="sub">Onwards · Sun · 01 Nov 2026</span>
           <p class="note">The hour the knot is tied. Please be at the mandapam a few minutes before.</p>
         </div>
         <button class="stub" id="stub" type="button" aria-label="Tear off the stub to reveal the muhurtam time">
@@ -1490,13 +1565,13 @@ footer .strip{
               <span class="tag">Leg 2 of 2</span>
             </div>
             <div class="stop key" data-start="20261101T033000Z" data-end="20261101T050000Z" data-title="Muhurtam: Divakar weds Soundharya">
-              <span class="at">09:00–10:30</span>
+              <span class="at">09:00 onwards</span>
               <div>
                 <h3><button class="stop-toggle" type="button" aria-expanded="false" aria-controls="d-muh">Muhurtam<svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button></h3>
-                <p>The auspicious hour. Rituals begin at nine and run through to the muhurtam. Be at the mandapam a few minutes before half past ten for the blessings.</p>
+                <p>The auspicious hour. The muhurtam begins at nine. Please be at the mandapam a few minutes before for the blessings.</p>
                 <p class="gate"><span>Gate <b>Mandapam</b></span><span>Then <b>Lunch</b></span></p>
                 <div class="more" id="d-muh" hidden>
-                  <p>The breakfast counter opens at 08:30 beside the mandapam, so you can eat and still watch. The thaali is tied at 10:30 sharp, and this is the one thing that does not wait. Sappadu is served on banana leaf from 12:00 in the dining hall.</p>
+                  <p>The breakfast counter opens at 08:30 beside the mandapam, so you can eat and still watch. The muhurtam begins at 09:00 sharp, and this is the one thing that does not wait. Sappadu is served on banana leaf from 12:00 in the dining hall.</p>
                 </div>
               </div>
               <p class="final">Final call · No boarding after this</p>
@@ -1582,12 +1657,25 @@ footer .strip{
               <span class="fl">Port of Entry · RYP</span>
             </div>
             <h3>The Royal Palms</h3>
-            <address>
-              21, 226, Chinnandi Kuppam Main Road,<br>
-              Pandian Nagar, Vettuvankeni, ECR,<br>
-              Chennai, Tamil Nadu 600115
-            </address>
+            <button class="addr-copy" id="addrCopy" type="button" aria-label="Copy the venue address">
+              <address>
+                21, 226, Chinnandi Kuppam Main Road,<br>
+                Pandian Nagar, Vettuvankeni, ECR,<br>
+                Chennai, Tamil Nadu 600115
+              </address>
+              <span class="copy-hint" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg><span>Tap to copy address</span></span>
+            </button>
             <p class="landmark">Opposite ECR Geetham Veg Restaurant</p>
+
+            <button class="route" id="arrRoute" type="button" aria-label="Chennai city to The Royal Palms, about 45 minutes. Tap to fly the route again.">
+              <span class="end"><b>MAA</b><small>Chennai city</small></span>
+              <span class="track" aria-hidden="true">
+                <span class="trail"></span>
+                <svg class="jet"><use href="#i-plane"/></svg>
+                <span class="eta">≈ 45 MIN · ECR</span>
+              </span>
+              <span class="end to"><b>RYP</b><small>Royal Palms</small></span>
+            </button>
 
             <div class="split">
               <div class="cell">
@@ -1604,10 +1692,16 @@ footer .strip{
               </div>
             </div>
 
-            <a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=The+Royal+Palms+Chinnandi+Kuppam+Main+Road+Vettuvankeni+ECR+Chennai+600115" target="_blank" rel="noopener">
-              <svg aria-hidden="true"><use href="#i-pin"/></svg>
-              Open in Maps
-            </a>
+            <div class="arr-actions">
+              <a class="map-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=The+Royal+Palms+Chinnandi+Kuppam+Main+Road+Vettuvankeni+ECR+Chennai+600115&amp;travelmode=driving" target="_blank" rel="noopener">
+                <svg aria-hidden="true"><use href="#i-plane"/></svg>
+                Directions
+              </a>
+              <button class="map-link ghost" id="arrShare" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 15V4M8 8l4-4 4 4"/></svg>
+                Share
+              </button>
+            </div>
           </div>
 
           <button class="arr-stamp" id="arrStamp" type="button" aria-label="Press the arrival stamp again">
@@ -1741,8 +1835,8 @@ footer .strip{
    1. CONFIG: edit everything here
    ============================================================ */
 const CONFIG = {
-  // Muhurtam: Sunday 1 November 2026, 10:30 AM IST
-  weddingISO: "2026-11-01T10:30:00+05:30",
+  // Muhurtam: Sunday 1 November 2026, 9:00 AM IST onwards
+  weddingISO: "2026-11-01T09:00:00+05:30",
   flight: "DS 3110",
 
   // Check-ins arrive directly in your Google Sheet via Apps Script.
@@ -2096,6 +2190,67 @@ barcode(document.getElementById("bcFoot"), "SHUBHAVIVAHA011126", "#D4AF56");
       card.classList.remove("stamped");
       void stamp.offsetWidth;
       card.classList.add("stamped");
+    });
+  }
+
+  const VENUE_ADDR = "The Royal Palms, 21, 226, Chinnandi Kuppam Main Road, Pandian Nagar, Vettuvankeni, ECR, Chennai, Tamil Nadu 600115 (opposite ECR Geetham Veg Restaurant)";
+  const MAP_URL = "https://www.google.com/maps/search/?api=1&query=The+Royal+Palms+Chinnandi+Kuppam+Main+Road+Vettuvankeni+ECR+Chennai+600115";
+  const buzz = () => { if(navigator.vibrate){ try{ navigator.vibrate(12); }catch(e){} } };
+
+  // the flight path: flies once when the stamp lands, and again on every tap
+  const route = document.getElementById("arrRoute");
+  if(route){
+    const fly = () => {
+      if(reduceMotion){ route.classList.add("flown"); return; }
+      route.classList.remove("flying", "flown");
+      void route.offsetWidth;
+      route.classList.add("flying");
+    };
+    route.querySelector(".jet").addEventListener("animationend", () => {
+      route.classList.remove("flying"); route.classList.add("flown");
+    });
+    route.addEventListener("click", () => { buzz(); fly(); });
+    new MutationObserver((m, obs) => {
+      if(card.classList.contains("stamped")){ obs.disconnect(); setTimeout(fly, 250); }
+    }).observe(card, { attributes: true, attributeFilter: ["class"] });
+    if(card.classList.contains("stamped")) fly();
+  }
+
+  // tap the address to copy it
+  const addr = document.getElementById("addrCopy");
+  if(addr){
+    const hint = addr.querySelector(".copy-hint span");
+    let t = 0;
+    const done = ok => {
+      hint.textContent = ok ? "Address copied" : "Press and hold to copy";
+      addr.classList.toggle("copied", ok);
+      if(ok) buzz();
+      clearTimeout(t);
+      t = setTimeout(() => { hint.textContent = "Tap to copy address"; addr.classList.remove("copied"); }, 2200);
+    };
+    addr.addEventListener("click", () => {
+      if(navigator.clipboard && window.isSecureContext){
+        navigator.clipboard.writeText(VENUE_ADDR).then(() => done(true), () => done(false));
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = VENUE_ADDR; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        let ok = false; try{ ok = document.execCommand("copy"); }catch(e){}
+        ta.remove(); done(ok);
+      }
+    });
+  }
+
+  // share the venue: the phone's share sheet, or WhatsApp where there is none
+  const share = document.getElementById("arrShare");
+  if(share){
+    share.addEventListener("click", () => {
+      const text = "Divakar & Soundharya's wedding venue:\n" + VENUE_ADDR;
+      if(navigator.share){
+        navigator.share({ title: "The Royal Palms", text, url: MAP_URL }).catch(() => {});
+      } else {
+        window.open("https://wa.me/?text=" + encodeURIComponent(text + "\n" + MAP_URL), "_blank", "noopener");
+      }
     });
   }
 })();
