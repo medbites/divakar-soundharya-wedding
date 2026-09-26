@@ -65,7 +65,9 @@ button:focus-visible,.chip:focus-visible,tr[tabindex]:focus-visible{outline:2px 
 .panel header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
 .panel header p{margin:0;color:var(--muted);font-size:13px}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.chartbox{position:relative;height:260px}
+.chartbox{position:relative;height:260px;min-width:0;width:100%}
+.chartbox canvas{max-width:100%}
+.panel>*{min-width:0}
 .chartbox.sm{height:220px}
 .legend{display:flex;gap:16px;font-size:13px;color:var(--muted)}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
